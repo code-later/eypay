@@ -5,11 +5,11 @@ require "eypay/version"
 Gem::Specification.new do |s|
   s.name        = "eypay"
   s.version     = Eypay::VERSION
-  s.authors     = ["Björn Vollmer"]
+  s.authors     = ["orko"]
   s.email       = ["bjoern.vollmer@gmail.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "https://github.com/orko/eypay"
+  s.summary     = %q{Payment Integration}
+  s.description = %q{Integration of different payment strategies}
 
   s.rubyforge_project = "eypay"
 
