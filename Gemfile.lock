@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    eypay (0.0.1)
+    eypay (0.0.5)
       rails (= 3.0.4)
 
 GEM
@@ -89,5 +89,4 @@ PLATFORMS
 
 DEPENDENCIES
   eypay!
-  rails (= 3.0.4)
   rspec-rails (~> 2.5)

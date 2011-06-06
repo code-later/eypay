@@ -25,7 +25,7 @@ module EypayHelper
     qpay_options["requestfingerprint"]      = fingerprint.fingerprint
 
     # generate form with hidden fields for request to qpay
-    form_tag Rails.application.config.qpay.qpay_url, "method" => "post", "accept-charset" => "utf-8" do
+    form_tag Rails.application.config.eypay.qpay_url, "method" => "post", "accept-charset" => "utf-8" do
       qpay_options.each do |field_name, value|
         concat hidden_field_tag field_name, value
       end

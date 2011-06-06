@@ -21,3 +21,16 @@ config.eypay.confirm_url  = config.base_url + "???" # optionally
 config.eypay.success_url  = config.base_url + "???"
 config.eypay.cancel_url   = config.base_url + "???"
 config.eypay.failure_url  = config.base_url + "???"
+
+
+3. Implement a controller which overrides the EypayController:
+
+class SomeController < EypayController
+
+
+4. And Override the following actions if you want specific behaviours:
+
+- confirm
+- failure
+- cancel
+- success
