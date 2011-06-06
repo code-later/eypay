@@ -14,16 +14,16 @@ class EypayController < ApplicationController
     render :nothing
   end
 
+  def success
+    Rails.logger.debug "===> Payment succeeded!"
+  end
+
   def failure
     Rails.logger.debug "===> Payment failed!"
   end
 
   def cancel
     Rails.logger.debug "===> Payment canceled!"
-  end
-
-  def success
-    Rails.logger.debug "===> Payment succeeded!"
   end
 
   private

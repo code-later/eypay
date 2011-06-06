@@ -25,7 +25,7 @@ config.eypay.failure_url  = config.base_url + "???"
 
 3. Implement a controller which overrides the EypayController:
 
-class SomeController < EypayController
+class ExampleController < EypayController
 
 
 4. And Override the following actions if you want specific behaviours:
@@ -34,3 +34,17 @@ class SomeController < EypayController
 - failure
 - cancel
 - success
+
+
+5. Define in your routes something like this:
+
+scope "/payment" do
+  match "example/:action", :controller => "payment/example"
+end
+
+
+6. Set all urls based on the routes configuration:
+
+config.qpay.success_url  = config.base_url + "/payment/example/success"
+config.qpay.cancel_url   = config.base_url + "/payment/example/cancel"
+config.qpay.failure_url  = config.base_url + "/payment/example/failure"
