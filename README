@@ -1,0 +1,50 @@
+== Configuration Steps
+
+1. In application.rb:
+
+config.eypay = ActiveSupport::OrderedOptions.new
+
+
+2. In test.rb / development.rb / staging.rb / production.rb:
+
+config.base_url = "???"
+
+# eypay configuration
+config.eypay.qpay_url     = "???"
+config.eypay.secret       = "???"
+config.eypay.customer_id  = "???"
+config.eypay.currency     = "???"
+config.eypay.language     = "???"
+config.eypay.service_url  = config.base_url
+config.eypay.bbw_logo_url = config.base_url + "???"
+config.eypay.confirm_url  = config.base_url + "???" # optionally
+config.eypay.success_url  = config.base_url + "???"
+config.eypay.cancel_url   = config.base_url + "???"
+config.eypay.failure_url  = config.base_url + "???"
+
+
+3. Implement a controller which overrides the EypayController:
+
+class ExampleController < EypayController
+
+
+4. And Override the following actions if you want specific behaviours:
+
+- confirm
+- failure
+- cancel
+- success
+
+
+5. Define in your routes something like this:
+
+scope "/payment" do
+  match "example/:action", :controller => "payment/example"
+end
+
+
+6. Set all urls based on the routes configuration:
+
+config.qpay.success_url  = config.base_url + "/payment/example/success"
+config.qpay.cancel_url   = config.base_url + "/payment/example/cancel"
+config.qpay.failure_url  = config.base_url + "/payment/example/failure"
