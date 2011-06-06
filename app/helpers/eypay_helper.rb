@@ -8,20 +8,27 @@ module EypayHelper
       "cancelURL"           => Rails.application.config.eypay.cancel_url,
       "serviceURL"          => Rails.application.config.eypay.service_url,
       "imageURL"            => Rails.application.config.eypay.bbw_logo_url,
-      "amount"              => params.amount,
+      "amount"              => params[:amount],
       "currency"            => Rails.application.config.eypay.currency,
       "language"            => Rails.application.config.eypay.language,
-      "orderDescription"    => params.description,
-      "displayText"         => params.text
+      "displayText"         => params[:text],
+      "orderDescription"    => params[:description]
     }.merge(specific_params)
 
     if Rails.application.config.eypay.confirm_url
       qpay_options["confirmURL"] = Rails.application.config.eypay.confirm_url
     end
 
-    # generate hidden fields for request to qpay
-    qpay_options.each do |field_name, value|
-      concat hidden_field_tag field_name, value
+    # generate request fingerprint
+    fingerprint = Eypay::Fingerprint.new qpay_options
+    qpay_options["RequestFingerprintOrder"] = fingerprint.order
+    qpay_options["requestfingerprint"]      = fingerprint.fingerprint
+
+    # generate form with hidden fields for request to qpay
+    form_tag Rails.application.config.qpay.qpay_url, "method" => "post", "accept-charset" => "utf-8" do
+      qpay_options.each do |field_name, value|
+        concat hidden_field_tag field_name, value
+      end
     end
   end
 end
