@@ -50,9 +50,9 @@ Set all urls based on the routes configuration:
   config.qpay.failure_url  = config.base_url + "/payment/example/failure"
 
 
-Use helper method to generate a form for qpay
+Use helper method to generate hidden fields for qpay
 
-  form_for_qpay(
+  hidden_fields_for_qpay(
     { :amount => 42, :text => "Some text...", :description => "Some description..." },
     { :further_custom_parameters => "Some custom informations" }
   )

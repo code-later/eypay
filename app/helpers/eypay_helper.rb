@@ -1,5 +1,5 @@
 module EypayHelper
-  def form_for_qpay(params, specific_params = {})
+  def hidden_fields_for_qpay(params, specific_params = {})
     # collect required informations for the qpay request
     qpay_options = {
       "customerId"          => Rails.application.config.eypay.customer_id,
@@ -24,11 +24,9 @@ module EypayHelper
     qpay_options["RequestFingerprintOrder"] = fingerprint.order
     qpay_options["requestfingerprint"]      = fingerprint.fingerprint
 
-    # generate form with hidden fields for request to qpay
-    form_tag Rails.application.config.eypay.qpay_url, "method" => "post", "accept-charset" => "utf-8" do
-      qpay_options.each do |field_name, value|
-        concat hidden_field_tag field_name, value
-      end
+    # generate hidden fields for request to qpay
+    qpay_options.each do |field_name, value|
+      concat hidden_field_tag field_name, value
     end
   end
 
