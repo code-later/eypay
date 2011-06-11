@@ -52,7 +52,17 @@ Set all urls based on the routes configuration:
 
 Use helper method to generate hidden fields for qpay
 
-  hidden_fields_for_qpay(
-    { :amount => 42, :text => "Some text...", :description => "Some description..." },
-    { :further_custom_parameters => "Some custom informations" }
-  )
+  Add the following line to your controller:
+
+    helper :eypay
+
+  and the following lines to your template/partial:
+
+    hidden_fields_for_qpay(
+      { :amount => 42, :payment_type => "ELV", :text => "Some text...", :description => "Some description..." },
+      { :further_custom_parameters => "Some custom informations", "another_further_custom_parameters" => "Another custom information" }
+    )
+
+  The following payment types are currently supported:
+
+    "ELV"   >   Payment by direct debit.

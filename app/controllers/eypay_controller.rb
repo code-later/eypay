@@ -32,11 +32,10 @@ class EypayController < ApplicationController
   private
 
     def validate_fingerprint
-      if Qpay::Fingerprint.verify_from_request(params)
+      if Eypay::Fingerprint.verify_from_request(params)
         Rails.logger.debug "===> VALIDATED_PAYMENT: #{params}"
       else
         Rails.logger.debug "===> Payment verification failed!"
-        redirect_to root_path and return
       end
     end
 

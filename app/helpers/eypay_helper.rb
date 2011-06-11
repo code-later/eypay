@@ -11,8 +11,9 @@ module EypayHelper
       "amount"              => params[:amount],
       "currency"            => Rails.application.config.eypay.currency,
       "language"            => Rails.application.config.eypay.language,
+      "orderDescription"    => params[:description],
       "displayText"         => params[:text],
-      "orderDescription"    => params[:description]
+      "paymenttype"         => params[:payment_type]
     }.merge(specific_params)
 
     if Rails.application.config.eypay.confirm_url
@@ -29,16 +30,4 @@ module EypayHelper
       concat hidden_field_tag field_name, value
     end
   end
-
-  # def qpay_response_hidden_fields(qpay_options)
-  #   # generate request fingerprint
-  #   fingerprint = Qpay::Fingerprint.new qpay_options, "responseFingerprintOrder"
-  #   qpay_options["responseFingerprintOrder"] = fingerprint.order
-  #   qpay_options["responseFingerprint"]      = fingerprint.fingerprint
-  # 
-  #   # generate hidden fields for request to qpay
-  #   qpay_options.each do |field_name, value|
-  #     concat hidden_field_tag field_name, value
-  #   end
-  # end
 end

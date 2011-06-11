@@ -28,7 +28,7 @@ module Eypay
       fingerprint_items = order.split(",").map do |item|
         if item == "secret"
           secret_used = true
-          Rails.application.config.qpay.secret
+          Rails.application.config.eypay.secret
         else
           params[item]
         end
