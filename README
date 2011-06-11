@@ -1,19 +1,14 @@
 == Configuration Steps
 
-In application.rb:
-
-  config.eypay = ActiveSupport::OrderedOptions.new
-
-
 In test.rb / development.rb / staging.rb / production.rb:
 
   config.base_url = "???"
 
-  config.eypay.qpay_url     = "???"
+  config.eypay.qpay_url     = "???" # Default: "https://secure.wirecard-cee.com/qpay/init.php"
   config.eypay.secret       = "???"
   config.eypay.customer_id  = "???"
-  config.eypay.currency     = "???"
-  config.eypay.language     = "???"
+  config.eypay.currency     = "???" # Default: "EUR"
+  config.eypay.language     = "???" # Default: "de"
   config.eypay.service_url  = config.base_url
   config.eypay.bbw_logo_url = config.base_url + "???"
   config.eypay.confirm_url  = config.base_url + "???" # optionally
