@@ -7,7 +7,7 @@ module EypayHelper
       "failureURL"          => Rails.application.config.eypay.failure_url,
       "cancelURL"           => Rails.application.config.eypay.cancel_url,
       "serviceURL"          => Rails.application.config.eypay.service_url,
-      "imageURL"            => Rails.application.config.eypay.bbw_logo_url,
+      "imageURL"            => Rails.application.config.eypay.logo_url,
       "amount"              => params[:amount],
       "currency"            => Rails.application.config.eypay.currency,
       "language"            => Rails.application.config.eypay.language,

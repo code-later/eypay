@@ -10,7 +10,7 @@ In test.rb / development.rb / staging.rb / production.rb:
   config.eypay.currency     = "???" # Default: "EUR"
   config.eypay.language     = "???" # Default: "de"
   config.eypay.service_url  = config.base_url
-  config.eypay.bbw_logo_url = config.base_url + "???"
+  config.eypay.logo_url     = config.base_url + "???"
   config.eypay.confirm_url  = config.base_url + "???" # optionally
   config.eypay.success_url  = config.base_url + "???"
   config.eypay.cancel_url   = config.base_url + "???"

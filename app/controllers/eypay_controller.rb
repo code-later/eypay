@@ -9,9 +9,7 @@ class EypayController < ApplicationController
         cancel
       when "FAILURE"
         failure
-    end
-
-    render :nothing
+    end and return
   end
 
   def success
