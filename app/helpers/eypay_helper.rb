@@ -20,14 +20,36 @@ module EypayHelper
       qpay_options["confirmURL"] = Rails.application.config.eypay.confirm_url
     end
 
-    # generate request fingerprint
-    fingerprint = Eypay::Fingerprint.new qpay_options
-    qpay_options["RequestFingerprintOrder"] = fingerprint.order
-    qpay_options["requestfingerprint"]      = fingerprint.fingerprint
-
-    # generate hidden fields for request to qpay
-    qpay_options.each do |field_name, value|
-      concat hidden_field_tag field_name, value
-    end
+    extend_qpay_options_with_fingerprint(qpay_options)
+    generate_hidden_fields_for_request_to_qpay(qpay_options)
   end
+
+  def hidden_fields_for_qpay_toolkit(params, specific_params = {})
+    # collect required informations for the qpay request
+    qpay_options = {
+      "customerId"          => Rails.application.config.eypay.customer_id,
+      "toolkitPassword"     => Rails.application.config.eypay.toolkit_password,
+      "language"            => Rails.application.config.eypay.language
+    }.merge(specific_params)
+
+    toolkit = Eypay::Toolkit.new(params)
+    qpay_options.merge(toolkit.params)
+
+    extend_qpay_options_with_fingerprint(qpay_options)
+    generate_hidden_fields_for_request_to_qpay(qpay_options)
+  end
+
+  private
+
+    def extend_qpay_options_with_fingerprint(qpay_options)
+      fingerprint = Eypay::Fingerprint.new qpay_options
+      qpay_options["RequestFingerprintOrder"] = fingerprint.order
+      qpay_options["requestfingerprint"]      = fingerprint.fingerprint
+    end
+
+    def generate_hidden_fields_for_request_to_qpay(qpay_options)
+      qpay_options.each do |field_name, value|
+        concat hidden_field_tag field_name, value
+      end
+    end
 end

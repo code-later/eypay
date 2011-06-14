@@ -2,19 +2,23 @@
 
 In test.rb / development.rb / staging.rb / production.rb:
 
-  config.base_url = "???"
+  config.eypay.qpay_url           = "???" # Default: "https://secure.wirecard-cee.com/qpay/init.php"
+  config.eypay.qpay_toolkit_url   = "???" # Default: "https://secure.wirecard-cee.com/qpay/toolkit.php" (since version 0.2.0)
 
-  config.eypay.qpay_url     = "???" # Default: "https://secure.wirecard-cee.com/qpay/init.php"
-  config.eypay.secret       = "???"
-  config.eypay.customer_id  = "???"
-  config.eypay.currency     = "???" # Default: "EUR"
-  config.eypay.language     = "???" # Default: "de"
-  config.eypay.service_url  = config.base_url
-  config.eypay.logo_url     = config.base_url + "???"
-  config.eypay.confirm_url  = config.base_url + "???" # optionally
-  config.eypay.success_url  = config.base_url + "???"
-  config.eypay.cancel_url   = config.base_url + "???"
-  config.eypay.failure_url  = config.base_url + "???"
+  config.eypay.customer_id        = "???"
+  config.eypay.secret             = "???"
+  config.eypay.toolkit_password   = "???" # (since version 0.2.0)
+
+  config.eypay.currency           = "???" # Default: "EUR"
+  config.eypay.language           = "???" # Default: "de"
+
+  config.base_url                 = "???"
+  config.eypay.service_url        = config.base_url
+  config.eypay.logo_url           = config.base_url + "???"
+  config.eypay.confirm_url        = config.base_url + "???" # optionally
+  config.eypay.success_url        = config.base_url + "???"
+  config.eypay.cancel_url         = config.base_url + "???"
+  config.eypay.failure_url        = config.base_url + "???"
 
 
 == Usage
@@ -72,3 +76,19 @@ Use helper method to generate hidden fields for qpay
   The following payment types are currently supported:
 
     "ELV"   >   Payment by direct debit.
+
+
+== QPay Toolkit Support (since version 0.2.0)
+
+To use QPay Toolkit, it is necessary to set the following password in your configuration files:
+
+  config.eypay.toolkit_password = "???"
+
+Use helper method to generate hidden fields for qpay toolkit:
+
+  hidden_fields_for_qpay_toolkit(
+    { :command => "RecurPayment", :source_order_number => "Your order number from QPay", :amount => 42, :description => "Some description..." },
+    { :further_custom_parameters => "Some custom informations", "another_further_custom_parameters" => "Another custom information" }
+  )
+
+Only the QPay Toolkit command "RecurPayment" is currently supported.
