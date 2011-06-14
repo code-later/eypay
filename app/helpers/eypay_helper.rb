@@ -29,6 +29,7 @@ module EypayHelper
     qpay_options = {
       "customerId"          => Rails.application.config.eypay.customer_id,
       "toolkitPassword"     => Rails.application.config.eypay.toolkit_password,
+      "currency"            => Rails.application.config.eypay.currency,
       "language"            => Rails.application.config.eypay.language
     }.merge(specific_params)
 
