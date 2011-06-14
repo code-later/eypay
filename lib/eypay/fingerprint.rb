@@ -38,12 +38,12 @@ module Eypay
     end
 
 
-    def initialize(params, order_name="RequestFingerprintOrder")
+    def initialize(params, order_name="RequestFingerprintOrder", mandatory_fingerprint_params = MANDATORY_FINGERPRINT_PARAMS)
       params.stringify_keys!
       params = default_options.merge(params)
 
-      unless all_mandatory_fields_present?(params)
-        raise ArgumentError.new("Missing mandatory fingerprint parameters! #{MANDATORY_FINGERPRINT_PARAMS.join(", ")} are required.")
+      unless all_mandatory_fields_present?(params, mandatory_fingerprint_params)
+        raise ArgumentError.new("Missing mandatory fingerprint parameters! #{mandatory_fingerprint_params.join(", ")} are required.")
       end
 
       @order = build_order params.keys.map(&:to_s) << order_name
@@ -78,8 +78,8 @@ module Eypay
         }
       end
 
-      def all_mandatory_fields_present?(params)
-        MANDATORY_FINGERPRINT_PARAMS.all? { |field| params.include? field }
+      def all_mandatory_fields_present?(params, mandatory_fingerprint_params)
+        mandatory_fingerprint_params.all? { |field| params.include? field }
       end
 
   end

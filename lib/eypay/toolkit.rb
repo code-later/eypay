@@ -3,6 +3,7 @@
 module Eypay
   class Toolkit
     attr_reader :params
+    attr_reader :fingerprint_order
 
     def initialize(params)
       @params = { "command" => params[:command] }
@@ -25,6 +26,18 @@ module Eypay
           "currency"            => Rails.application.config.eypay.currency,
           "orderDescription"    => params[:description]
         })
+
+        @fingerprint_order = %w{
+          customerId
+          toolkitPassword
+          secret
+          command
+          language
+          sourceOrderNumber
+          orderDescription
+          amount
+          currency
+        }
       end
   end
 end
