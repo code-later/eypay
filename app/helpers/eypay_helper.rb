@@ -24,13 +24,13 @@ module EypayHelper
     generate_hidden_fields_for_request_to_qpay(qpay_options)
   end
 
-  def hidden_fields_for_qpay_toolkit(params, specific_params = {})
+  def hidden_fields_for_qpay_toolkit(params)
     # collect required informations for the qpay request
     qpay_options = {
       "customerId"          => Rails.application.config.eypay.customer_id,
       "toolkitPassword"     => Rails.application.config.eypay.toolkit_password,
       "language"            => Rails.application.config.eypay.language,
-    }.merge(specific_params)
+    }
 
     toolkit = Eypay::Toolkit.new(qpay_options, params)
 

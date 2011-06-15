@@ -87,8 +87,7 @@ To use QPay Toolkit, it is necessary to set the following password in your confi
 Use helper method to generate hidden fields for qpay toolkit:
 
   hidden_fields_for_qpay_toolkit(
-    { :command => "RecurPayment", :source_order_number => "Your order number from QPay", :amount => 42, :description => "Some description..." },
-    { :further_custom_parameters => "Some custom informations", "another_further_custom_parameters" => "Another custom information" }
+    { :command => "RecurPayment", :source_order_number => "Your order number from QPay", :amount => 42, :description => "Some description..." }
   )
 
 Only the QPay Toolkit command "RecurPayment" is currently supported.
