@@ -2,25 +2,26 @@
 
 module Eypay
   class Toolkit
-    attr_reader :params
+    attr_reader :options
     attr_reader :fingerprint_order
 
-    def initialize(params)
-      @params = { "command" => params[:command] }
-      determine_params_by_command(params)
+    def initialize(qpay_options, params)
+      @options = qpay_options
+      determine_toolkit_options_by_command(params)
     end
 
     private
 
-      def determine_params_by_command(params)
+      def determine_toolkit_options_by_command(params)
         case params[:command]
           when "RecurPayment"
-            determine_params_for_recur_payment(params)
+            determine_toolkit_options_for_recur_payment(params)
         end
       end
 
-      def determine_params_for_recur_payment(params)
-        @params.merge!({
+      def determine_toolkit_options_for_recur_payment(params)
+        @options.merge!({
+          "command"             => params[:command],
           "sourceOrderNumber"   => params[:source_order_number],
           "amount"              => params[:amount],
           "currency"            => Rails.application.config.eypay.currency,

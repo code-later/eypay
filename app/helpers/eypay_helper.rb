@@ -29,20 +29,18 @@ module EypayHelper
     qpay_options = {
       "customerId"          => Rails.application.config.eypay.customer_id,
       "toolkitPassword"     => Rails.application.config.eypay.toolkit_password,
-      "currency"            => Rails.application.config.eypay.currency,
-      "language"            => Rails.application.config.eypay.language
+      "language"            => Rails.application.config.eypay.language,
     }.merge(specific_params)
 
-    toolkit = Eypay::Toolkit.new(params)
-    qpay_options.merge(toolkit.params)
+    toolkit = Eypay::Toolkit.new(qpay_options, params)
 
-    extend_qpay_options_with_fingerprint(qpay_options, toolkit.fingerprint_order)
-    generate_hidden_fields_for_request_to_qpay(qpay_options)
+    extend_qpay_options_with_fingerprint(toolkit.options, toolkit.fingerprint_order)
+    generate_hidden_fields_for_request_to_qpay(toolkit.options)
   end
 
   private
 
-    def extend_qpay_options_with_fingerprint(qpay_options, fingerprint_order)
+    def extend_qpay_options_with_fingerprint(qpay_options, fingerprint_order = nil)
       if fingerprint_order.present?
         fingerprint = Eypay::Fingerprint.new qpay_options, nil, fingerprint_order
       else

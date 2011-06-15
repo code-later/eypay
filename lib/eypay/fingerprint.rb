@@ -46,8 +46,14 @@ module Eypay
         raise ArgumentError.new("Missing mandatory fingerprint parameters! #{mandatory_fingerprint_params.join(", ")} are required.")
       end
 
-      @order = build_order params.keys.map(&:to_s) << order_name
-      @fingerprint_seed = params.values << @order
+      if order_name.present?
+        @order = build_order params.keys.map(&:to_s) << order_name
+        @fingerprint_seed = params.values << @order
+      else
+        @order = build_order(mandatory_fingerprint_params)
+        @fingerprint_seed = build_seed(params, mandatory_fingerprint_params)
+      end
+
       @fingerprint = self.class.build_fingerprint @fingerprint_seed
     end
 
@@ -58,23 +64,20 @@ module Eypay
       end
 
 
-      def build_order(order_items)
-        order_items.join(",")
+      def build_order(mandatory_fingerprint_params)
+        mandatory_fingerprint_params.join(",")
+      end
+
+      def build_seed(params, mandatory_fingerprint_params)
+        mandatory_fingerprint_params.collect { |key| params[key] }
       end
 
       def default_options
         {
           "customerId" => Rails.application.config.eypay.customer_id,
           "secret"     => Rails.application.config.eypay.secret,
-
           "currency"   => Rails.application.config.eypay.currency,
-          "language"   => Rails.application.config.eypay.language,
-
-          "imageURL"   => Rails.application.config.eypay.bbw_logo,
-          "serviceURL" => Rails.application.config.eypay.service_url,
-          "successURL" => Rails.application.config.eypay.success_url,
-          "cancelURL"  => Rails.application.config.eypay.cancel_url,
-          "failureURL" => Rails.application.config.eypay.failure_url
+          "language"   => Rails.application.config.eypay.language
         }
       end
 
