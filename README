@@ -1,13 +1,27 @@
 == Configuration Steps
 
+Caution: New configuration interface since version 0.3.0!
+
 In test.rb / development.rb / staging.rb / production.rb:
 
   config.eypay.qpay_url           = "???" # Default: "https://secure.wirecard-cee.com/qpay/init.php"
   config.eypay.qpay_toolkit_url   = "???" # Default: "https://secure.wirecard-cee.com/qpay/toolkit.php" (since version 0.2.0)
 
-  config.eypay.customer_id        = "???"
-  config.eypay.secret             = "???"
-  config.eypay.toolkit_password   = "???" # (since version 0.2.0)
+  Since version 0.3.0 it is possible to create different logins for different countries:
+
+  config.eypay.logins = {
+    "Gernamy" => {
+      :customer_id        => "???",
+      :secret             => "???",
+      :toolkit_password   => "???"
+    },
+    "Canada" => {
+      :customer_id        => "???",
+      :secret             => "???",
+      :toolkit_password   => "???"
+    },
+    ...
+  }
 
   config.eypay.currency           = "???" # Default: "EUR"
   config.eypay.language           = "???" # Default: "de"
@@ -75,14 +89,15 @@ Use helper method to generate hidden fields for qpay
 
   The following payment types are currently supported:
 
-    "ELV"   >   Payment by direct debit.
+    "ELV"     >   Payment by direct debit.
+    "PAYPAL"  >   Payment via PayPal
 
 
 == QPay Toolkit Support (since version 0.2.0)
 
 To use QPay Toolkit, it is necessary to set the following password in your configuration files:
 
-  config.eypay.toolkit_password = "???"
+  :toolkit_password => "???"
 
 Use helper method to generate hidden fields for qpay toolkit:
 

@@ -1,8 +1,10 @@
 module EypayHelper
   def hidden_fields_for_qpay(params, specific_params = {})
+    country = params[:country]
+
     # collect required informations for the qpay request
     qpay_options = {
-      "customerId"          => Rails.application.config.eypay.customer_id,
+      "customerId"          => Rails.application.config.eypay.logins[country][:customer_id],
       "successURL"          => Rails.application.config.eypay.success_url,
       "failureURL"          => Rails.application.config.eypay.failure_url,
       "cancelURL"           => Rails.application.config.eypay.cancel_url,
@@ -27,8 +29,8 @@ module EypayHelper
   def hidden_fields_for_qpay_toolkit(params)
     # collect required informations for the qpay request
     qpay_options = {
-      "customerId"          => Rails.application.config.eypay.customer_id,
-      "toolkitPassword"     => Rails.application.config.eypay.toolkit_password,
+      "customerId"          => Rails.application.config.eypay.logins[country][:customer_id],
+      "toolkitPassword"     => Rails.application.config.eypay.logins[country][:toolkit_password],
       "language"            => Rails.application.config.eypay.language,
     }
 

@@ -19,16 +19,18 @@ module Eypay
     }
 
     def self.verify_from_request(params)
-      verify params, params["responseFingerprintOrder"], params["responseFingerprint"]
+      Rails.application.config.eypay.logins.any? do |login|
+        verify params, params["responseFingerprintOrder"], params["responseFingerprint"], login[:secret]
+      end
     end
 
-    def self.verify(params, order, given_fingerprint)
+    def self.verify(params, order, given_fingerprint, secret)
       secret_used = false
 
       fingerprint_items = order.split(",").map do |item|
         if item == "secret"
           secret_used = true
-          Rails.application.config.eypay.secret
+          secret
         else
           params[item]
         end
@@ -74,8 +76,6 @@ module Eypay
 
       def default_options
         {
-          "customerId" => Rails.application.config.eypay.customer_id,
-          "secret"     => Rails.application.config.eypay.secret,
           "currency"   => Rails.application.config.eypay.currency,
           "language"   => Rails.application.config.eypay.language
         }
