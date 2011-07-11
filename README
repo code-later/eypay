@@ -83,9 +83,20 @@ Use helper method to generate hidden fields for qpay
   and the following lines to your template/partial:
 
     hidden_fields_for_qpay(
-      { :amount => 42, :payment_type => "ELV", :text => "Some text...", :description => "Some description..." },
-      { :further_custom_parameters => "Some custom informations", "another_further_custom_parameters" => "Another custom information" }
+      {
+        :amount => 42,
+        :payment_type => "ELV",
+        :text => "Some text...",
+        :description => "Some description...",
+        :country => "Germany"
+      },
+      {
+        :further_custom_parameters => "Some custom informations",
+        :another_further_custom_parameters => "Another custom information"
+      }
     )
+
+    Caution: Since version 0.3.0 it is necessary to pass the parameter country to the method hidden_fields_for_qpay!
 
   The following payment types are currently supported:
 
@@ -102,7 +113,14 @@ To use QPay Toolkit, it is necessary to set the following password in your confi
 Use helper method to generate hidden fields for qpay toolkit:
 
   hidden_fields_for_qpay_toolkit(
-    { :command => "RecurPayment", :source_order_number => "Your order number from QPay", :amount => 42, :description => "Some description..." }
+    {
+      :command => "RecurPayment",
+      :source_order_number => "Your order number from QPay",
+      :amount => 42, :description => "Some description...",
+      :country => "Germany"
+    }
   )
+
+  Caution: Since version 0.3.0 it is necessary to pass the parameter country to the method hidden_fields_for_qpay_toolkit!
 
 Only the QPay Toolkit command "RecurPayment" is currently supported.

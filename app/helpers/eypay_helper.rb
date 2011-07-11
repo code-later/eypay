@@ -27,6 +27,8 @@ module EypayHelper
   end
 
   def hidden_fields_for_qpay_toolkit(params)
+    country = params[:country]
+
     # collect required informations for the qpay request
     qpay_options = {
       "customerId"          => Rails.application.config.eypay.logins[country][:customer_id],
