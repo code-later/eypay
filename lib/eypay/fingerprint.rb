@@ -19,7 +19,7 @@ module Eypay
     }
 
     def self.verify_from_request(params)
-      Rails.application.config.eypay.logins.any? do |login|
+      Rails.application.config.eypay.logins.any? do |country, login|
         verify params, params["responseFingerprintOrder"], params["responseFingerprint"], login[:secret]
       end
     end
