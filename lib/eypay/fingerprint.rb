@@ -40,20 +40,23 @@ module Eypay
     end
 
 
-    def initialize(params, order_name="RequestFingerprintOrder", mandatory_fingerprint_params = MANDATORY_FINGERPRINT_PARAMS)
-      params.stringify_keys!
-      params = default_options.merge(params)
+    def initialize(options, params = {})
+      order_name = params[:order_name] || "RequestFingerprintOrder"
+      mandatory_fingerprint_params = params[:mandatory_fingerprint_params] || MANDATORY_FINGERPRINT_PARAMS
 
-      unless all_mandatory_fields_present?(params, mandatory_fingerprint_params)
+      options.stringify_keys!
+      options = default_options(params[:country]).merge(options)
+
+      unless all_mandatory_fields_present?(options, mandatory_fingerprint_params)
         raise ArgumentError.new("Missing mandatory fingerprint parameters! #{mandatory_fingerprint_params.join(", ")} are required.")
       end
 
       if order_name.present?
-        @order = build_order params.keys.map(&:to_s) << order_name
-        @fingerprint_seed = params.values << @order
+        @order = build_order options.keys.map(&:to_s) << order_name
+        @fingerprint_seed = options.values << @order
       else
         @order = build_order(mandatory_fingerprint_params)
-        @fingerprint_seed = build_seed(params, mandatory_fingerprint_params)
+        @fingerprint_seed = build_seed(options, mandatory_fingerprint_params)
       end
 
       @fingerprint = self.class.build_fingerprint @fingerprint_seed
@@ -74,10 +77,11 @@ module Eypay
         mandatory_fingerprint_params.collect { |key| params[key] }
       end
 
-      def default_options
+      def default_options(country)
         {
           "currency"   => Rails.application.config.eypay.currency,
-          "language"   => Rails.application.config.eypay.language
+          "language"   => Rails.application.config.eypay.language,
+          "secret"     => Rails.application.config.eypay.logins[country][:secret]
         }
       end
 

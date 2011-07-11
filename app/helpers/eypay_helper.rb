@@ -22,7 +22,7 @@ module EypayHelper
       qpay_options["confirmURL"] = Rails.application.config.eypay.confirm_url
     end
 
-    extend_qpay_options_with_fingerprint(qpay_options)
+    extend_qpay_options_with_fingerprint(qpay_options, :country => country)
     generate_hidden_fields_for_request_to_qpay(qpay_options)
   end
 
@@ -36,17 +36,24 @@ module EypayHelper
 
     toolkit = Eypay::Toolkit.new(qpay_options, params)
 
-    extend_qpay_options_with_fingerprint(toolkit.options, toolkit.fingerprint_order)
+    extend_qpay_options_with_fingerprint(toolkit.options, :country => country, :fingerprint_order => toolkit.fingerprint_order)
     generate_hidden_fields_for_request_to_qpay(toolkit.options)
   end
 
   private
 
-    def extend_qpay_options_with_fingerprint(qpay_options, fingerprint_order = nil)
-      if fingerprint_order.present?
-        fingerprint = Eypay::Fingerprint.new qpay_options, nil, fingerprint_order
+    def extend_qpay_options_with_fingerprint(qpay_options, params = {})
+      if params[:fingerprint_order].present?
+        fingerprint = Eypay::Fingerprint.new(
+          qpay_options,
+          :country => params[:country],
+          :fingerprint_order => params[:fingerprint_order]
+        )
       else
-        fingerprint = Eypay::Fingerprint.new qpay_options
+        fingerprint = Eypay::Fingerprint.new(
+          qpay_options,
+          :country => params[:country]
+        )
       end
 
       qpay_options["RequestFingerprintOrder"] = fingerprint.order

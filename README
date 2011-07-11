@@ -10,7 +10,7 @@ In test.rb / development.rb / staging.rb / production.rb:
   Since version 0.3.0 it is possible to create different logins for different countries:
 
   config.eypay.logins = {
-    "Gernamy" => {
+    "Germany" => {
       :customer_id        => "???",
       :secret             => "???",
       :toolkit_password   => "???"
