@@ -85,6 +85,8 @@ Use helper method to generate hidden fields for qpay
     hidden_fields_for_qpay(
       {
         :amount => 42,
+        :currency => "EUR",                         # You can set this manually since version 0.3.4
+        :language => "de",                          # You can set this manually since version 0.3.4
         :payment_type => "ELV",
         :text => "Some text...",
         :description => "Some description...",
@@ -103,6 +105,9 @@ Use helper method to generate hidden fields for qpay
     "ELV"     >   Payment by direct debit.
     "PAYPAL"  >   Payment via PayPal
 
+  Since version 0.3.4: Supported currency codes are all currency codes of the ISO 4217 standard:
+  http://en.wikipedia.org/wiki/ISO_4217
+
 
 == QPay Toolkit Support (since version 0.2.0)
 
@@ -117,7 +122,8 @@ Use helper method to generate hidden fields for qpay toolkit:
       :command => "RecurPayment",
       :source_order_number => "Your order number from QPay",
       :amount => 42, :description => "Some description...",
-      :country => "Germany"
+      :country => "Germany",
+      :language => "de" # You can set this manually since version 0.3.4
     }
   )
 

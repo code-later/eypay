@@ -1,6 +1,8 @@
 module EypayHelper
   def hidden_fields_for_qpay(params, specific_params = {})
     country = params[:country]
+    currency = params[:currency] || Rails.application.config.eypay.currency
+    language = params[:language] || Rails.application.config.eypay.language
 
     # collect required informations for the qpay request
     qpay_options = {
@@ -11,8 +13,8 @@ module EypayHelper
       "serviceURL"          => Rails.application.config.eypay.service_url,
       "imageURL"            => Rails.application.config.eypay.logo_url,
       "amount"              => params[:amount],
-      "currency"            => Rails.application.config.eypay.currency,
-      "language"            => Rails.application.config.eypay.language,
+      "currency"            => currency,
+      "language"            => language,
       "orderDescription"    => params[:description],
       "displayText"         => params[:text],
       "paymenttype"         => params[:payment_type]
@@ -28,12 +30,13 @@ module EypayHelper
 
   def hidden_fields_for_qpay_toolkit(params)
     country = params[:country]
+    language = params[:language] || Rails.application.config.eypay.language
 
     # collect required informations for the qpay request
     qpay_options = {
       "customerId"          => Rails.application.config.eypay.logins[country][:customer_id],
       "toolkitPassword"     => Rails.application.config.eypay.logins[country][:toolkit_password],
-      "language"            => Rails.application.config.eypay.language,
+      "language"            => language,
     }
 
     toolkit = Eypay::Toolkit.new(qpay_options, params)
