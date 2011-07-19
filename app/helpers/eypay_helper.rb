@@ -17,6 +17,7 @@ module EypayHelper
       "language"            => language,
       "orderDescription"    => params[:description],
       "displayText"         => params[:text],
+      "customerStatement"   => params[:customer_statement],
       "paymenttype"         => params[:payment_type]
     }.merge(specific_params)
 
