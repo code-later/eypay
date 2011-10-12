@@ -132,3 +132,8 @@ Use helper method to generate hidden fields for qpay toolkit:
   Caution: Since version 0.3.0 it is necessary to pass the parameter country to the method hidden_fields_for_qpay_toolkit!
 
 Only the QPay Toolkit command "RecurPayment" is currently supported.
+
+
+== Common Changes
+
+Since version 0.3.7: no binding to rails 3.0.x
